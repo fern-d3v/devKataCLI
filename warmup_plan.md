@@ -1,3 +1,5 @@
+# Plan
+
 # Building the Daily Dev Warmup CLI
 
 ## Project Goal
@@ -17,7 +19,7 @@ To create a personal, interactive CLI tool that lets you define and run through 
 
 ## Phase 1: The Interactive Checklist (Your MVP)
 
-### Step 1: Setting Up Your Project Environment
+### ~~Step 1: Setting Up Your Project Environment~~
 
 Your first task is to create the project and install the tools you'll need.
 
@@ -34,7 +36,7 @@ Your first task is to create the project and install the tools you'll need.
     - Inside this file, add a single line: `node_modules/`.
         - This tells Git (a version control system) to ignore the folder where all your downloaded libraries are stored, which is a crucial best practice.
 
-### Step 2: Create Your File Structure
+### ~~Step 2: Create Your File Structure~~
 
 Organization is key. Create the following folders and empty files. This structure separates your code based on its purpose.
 
@@ -42,13 +44,21 @@ Organization is key. Create the following folders and empty files. This structur
 /dev_warmup
 
 ├── .gitignore
+
 ├── package.json
+
 └── src/    
+
     ├── index.js    
+
     ├── commands/    
+
     │   ├── new.js    
+
     │   └── start.js    
+
     └── utils/        
+
         └── storage.js
 ```
 
@@ -58,9 +68,9 @@ Organization is key. Create the following folders and empty files. This structur
 
 **What to learn and do**:
 
-1. Find the User's Home Directory: 
+1. ~~Find the User's Home Directory:~~ 
     1. Research Node.js's built-in `os` module to find the function that gives you the current user's home directory.
-2. Work with File Paths: 
+2. W~~ork with File Paths:~~ 
     1. Research Node.js's built-in `path` module. You'll need it to combine the home directory path with your own folder and file name (e.g., `.config/dev-warmup/routine.json`).
 3. Read and Write Files:
     1. Research Node.js's built-in `fs/promises` module. You need to learn how to read a file's contents and how to write text to a file. Since you'll be storing data in JSON format, you'll also need to learn about `JSON.parse()` (to turn JSON text into a JavaScript object) and `JSON.stringify()` (to turn a JavaScript object into JSON text).
@@ -253,3 +263,14 @@ Once you've built your CLI, here is a menu of ideas for tasks you can add to you
 - **Stretches:** A simple prompt: `"Do 2 minutes of hand, wrist, and back stretches."`
 - **Hydrate:** A simple prompt: `"Drink a glass of water."`
 - **Posture Check:** A simple prompt: `"Adjust your chair, monitor, and keyboard."`
+
+## **Appendix B: Warmup Plans Resources**
+
+Below are links to the sites that influenced this project
+
+### **Links**
+
+- [Dev Warmup Routine](https://dev.to/abubakersiddique771/i-replaced-my-morning-routine-with-a-dev-warmup-heres-what-changed-2edi)
+
+
+
