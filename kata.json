@@ -1,6 +1,5 @@
 {
     "theme": "dracula",
-    "fontSize": 16,
     "stretches": true,
     "hydrate": true,
     "postureCheck": true,
