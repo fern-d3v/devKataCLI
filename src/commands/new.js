@@ -1,5 +1,6 @@
 import { intro, outro, text, select, isCancel } from '@clack/prompts';
 import { saveKata } from '../utils/storage.js';
+import { DEFAULT_KATAS } from '../utils/storage.js';
 
 // Wrap in an async function to use await
 export default async function newCmd() {
@@ -9,24 +10,9 @@ export default async function newCmd() {
   const tasks = [];
   let anotherTask = true;
 
-  // Loop to collect multiple tasks
-  const kataType = await select({
-    message: 'Select kata:',
-    options: [
-      { value: 'quickKata', label: 'quickKata - A short, focused warmup routine\n 5-10 minutes' },
-      { value: 'namiKata', label: 'namiKata - A medium-length kata with exercises to help carry you through your day\n 15-30 minutes' },
-      { value: 'devKata', label: 'devKata - A comprehensive warmup (full-kata)\n 30-45 minutes' }
-    ]
-  });
-  }
 
-    if (isCancel(kataType)) {
-      outro('initialization cancelled. no kata created.');
-      return;
-    }
 
-    const tasks = [];
-    let taskCount = 3; // Default 3 tasks per kata
+let taskCount = 3; // Default 3 tasks per kata
 
     // For devKata, pre-populate with coding sandbox and codewars tasks
     if (kataType === 'devKata') {
@@ -62,4 +48,9 @@ export default async function newCmd() {
 // Save the new kata routine
     await saveKata(kataType, tasks);
     outro(`${kataType} created successfully!`);
-  
+
+
+// Implement buildKata() to construct the full kata based on selected type
+
+ 
+}

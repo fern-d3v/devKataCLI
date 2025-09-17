@@ -113,11 +113,11 @@ Organization is key. Create the following folders and empty files. This structur
 
 **What to learn and do**:
 
-1. Load the Katas: 
+1. ~~Load the Katas:~~
     1. `import` and call your `getKatas()` function from `storage.js`.
-2. Select Kata Type:
+2. ~~Select Kata Type:~~
     1. Use the `select` prompt to have the user choose which kata to run ("quickKata", "kihoKata", or "devKata").
-3. Handle No Kata:
+3. ~~Handle No Kata:~~
     1. If the selected kata doesn't exist or has no tasks, print a message telling the user to run the `new` command first, and then exit.
 4. Loop Through Tasks:
     1. Use a `for...of` loop to go through the array of tasks one by one.
