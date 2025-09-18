@@ -65,7 +65,8 @@ export const DEFAULT_KATAS = {
   namiKata: [
     { description: "Hydrate", completed: false }, // TODO: have hydration fun facts displayed
     { description: "Check communications", completed: false }, // TODO: open email, slack, discord, etc, in a new window then close it after 5 minutes
-    { description: "Review yesterday's code", completed: false } // TODO: integrate with GitHub to fetch the user's PRs or commits from the previous day and display the first 100 lines of code from one random file in the PR or commit
+    { description: "Review yesterday's code", completed: false }, // TODO: integrate with GitHub to fetch the user's PRs or commits from the previous day and display the first 100 lines of code from one random file in the PR or commit
+    { description: "Practice your typing abilities", completed: false } // TODO: make sure this opens monkeystype
   ],
   // Includes ALL miniKata + namiKata tasks first
   devKata: [

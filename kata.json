@@ -1,5 +1,4 @@
 {
-    "theme": "dracula",
     "stretches": true,
     "hydrate": true,
     "postureCheck": true,
@@ -7,7 +6,6 @@
     "checkTasks": true,
     "checkCommunication": true,
     "yesterdayReview": true,
-    "flashCards": true,
     "readArticle": true,
     "typingPractice": true,
     "codeWars": true,
