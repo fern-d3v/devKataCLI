@@ -58,9 +58,35 @@ const kata = await getKata(selectedKataType);
         }
     }
 };
-
-await saveKata(selectedKataType, kata); // Save the updated kata with completion status
-
-outro('kata completed! see you tomorrow <3')
-    
 }
+const storedKata = await saveKata(selectedKataType, kata); // Save the updated kata with completion status
+if (storedKata === true) {
+    outro('kata saved! see you tomorrow <3');
+} else if (storedKata === false) {
+    outro('Error saving kata. Please try again.');
+    // Ask the user what they want to do 
+    const userChoice = await select({
+        message: 'what would you like to do?',
+        options: [
+            { value: 'retry', label: 'retry saving the kata' },
+            { value: 'printContinue', label: 'print the kata results to the console, then continue' },
+            { value: 'exit', label: 'exit without saving' }
+        ]
+    });
+    // Handle user choice
+    if (userChoice === 'retry') {
+        const retrySave = await saveKata(selectedKataType, kata);
+        if (retrySave === false) {
+            outro('Retry failed. Exiting without saving.');
+            return;
+        } else if (retrySave === true) {
+            outro('Kata saved successfully on retry!');
+        }
+    } else if (userChoice === 'printContinue') {
+            console.log('Kata Results:', kata);
+            outro('Kata results printed to console. Continuing...');
+        } else if (userChoice === 'exit') {
+            outro('Exiting without saving. Your changes are not saved.');
+            return;
+        }
+    }

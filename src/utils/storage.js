@@ -33,7 +33,6 @@ export async function saveKata(type, tasks) {
     try {
         // Ensure the directory exists
         await fs.mkdir(configDir, { recursive: true });
-
         // Get existing katas or create new object if none exist
         let kata = {};
         try {
@@ -42,14 +41,15 @@ export async function saveKata(type, tasks) {
             // If error reading, start with empty object
             kata = {};
         }
-
         // Update or add the specific kata type
         kata[type] = tasks;
-
+        // Write back to the file
         const jsonString = JSON.stringify(kata, null, 2);
         await fs.writeFile(configFilePath, jsonString, 'utf8');
+        return true; // Indicate success
     } catch (error) {
         console.error('Error saving config file:', error);
+        return false; // Indicate failure to save
     }
 };
 
