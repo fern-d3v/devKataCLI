@@ -1,7 +1,8 @@
 import { getKata, saveKata } from "../utils/storage.js";
-import { handlePostureCheck } from "../utils/handlers.js";
-import { outro, spinner, isCancel, confirm, select } from "@clack/prompts";
+import { handlePostureCheck, handleSetDailyGoals } from "../utils/handlers.js";
+import { outro, spinner, isCancel, confirm, select, text } from "@clack/prompts";
 import pc from 'picocolors';
+
 
   const dracula = {
        success: (text) => pc.green(text),    // Green
