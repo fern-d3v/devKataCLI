@@ -283,4 +283,4 @@ We love hearing about new ideas! When suggesting features:
 
 ---
 
-Thank you for contributing to devKataCLI! Your efforts help make developer habits more accessible and enjoyable for everyone. 🚀
+Thank you for contributing to devKataCLI! Your efforts help make developer habits more accessible and enjoyable for everyone. ⛩️

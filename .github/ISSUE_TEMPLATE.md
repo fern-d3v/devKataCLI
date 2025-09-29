@@ -103,4 +103,4 @@ Before submitting, please make sure:
 
 ---
 
-*Thank you for helping make devKataCLI better! 🚀*
+*Thank you for helping make devKataCLI better! ⛩️*

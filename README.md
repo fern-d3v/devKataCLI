@@ -179,3 +179,4 @@ This project is licensed under the MIT License - see the *LICENSE* file for deta
 <div align="center">
   <sub>Built with ❤️ for developers who value consistency and growth</sub>
 </div>
+<div align="center">⛩️</div>
