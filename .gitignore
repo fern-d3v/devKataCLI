@@ -137,9 +137,12 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-wamp.md
-warmup_plan.md
-warp.md
+
+# Files to ignore
 appendix_diagram.md
 devKata-lessons.md
 data-schema-design.md
+wamp.md
+warmup_plan.md
+warp.md
+
