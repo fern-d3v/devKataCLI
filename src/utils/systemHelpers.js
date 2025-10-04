@@ -8,8 +8,13 @@ const execAsync = promisify(exec);
 // open URL in default browser
 export async function openInBrowser(url) {
     try{
+        // Validate URL to prevent command injection
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            return { success: false, message: 'Invalid URL protocol', url };
+        }
+        
         // macOS uses 'open' command
-        await execAsync(`open "${url}"`, { timeout: 5000 });
+        await execAsync(`open ${JSON.stringify(url)}`, { timeout: 5000 });
         return { success: true, message: 'Opened in browser' };
     } catch (error) {
         console.error('Error opening browser:', error.message);
@@ -43,7 +48,7 @@ export async function openInEditor(filePath) {
         }
         // try opening with default application (macOS)
         try {
-            await  execAsync(`open "${filePath}"`, { timeout: 5000 });
+            await  execAsync(`open ${JSON.stringify(filePath)}`, { timeout: 5000 });
             return { success: true, message: 'Sandbox opened in default editor' };
         } catch {
             // fallback: try $EDITOR environment variable
@@ -63,9 +68,12 @@ export async function openInEditor(filePath) {
 // get git commits from a repository
 export async function getGitCommits(repoPath, since = 'yesterday') {
     try {
+        // Validate repoPath to prevent command injection
+        const normalizedPath = path.normalize(repoPath);
+        
         // git log command
         const untilDate = since === 'yesterday' ? 'today' : 'now';
-        const cmd = `cd "${repoPath}" && git --no-pager log --since="${since}" --until="${untilDate}" --oneline`;
+        const cmd = `cd ${JSON.stringify(normalizedPath)} && git --no-pager log --since=${JSON.stringify(since)} --until=${JSON.stringify(untilDate)} --oneline`;
         
         const { stdout, stderr } = await execAsync(cmd, { timeout: 5000 });
         
@@ -95,11 +103,14 @@ export async function getGitCommits(repoPath, since = 'yesterday') {
 //Validate if a path is a git repository
 export async function validateGitRepo(repoPath) {
     try {
+        // Normalize path to prevent directory traversal
+        const normalizedPath = path.normalize(repoPath);
+        
         // check if .git directory exists
-        const gitPath = path.join(repoPath, '.git');
+        const gitPath = path.join(normalizedPath, '.git');
         await fs.access(gitPath);
         // try running git status to confirm its a valid repo
-        const cmd = `cd "${repoPath}" && git status`;
+        const cmd = `cd ${JSON.stringify(normalizedPath)} && git status`;
         await execAsync(cmd, { timeout: 3000 });
         return { success: true, message: 'Valid git repository' };
     } catch (error) {

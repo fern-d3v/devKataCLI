@@ -3,7 +3,6 @@ import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
 import { generateUUID, getDefaultMetadata, createTask } from './helpers.js';
-import { get } from 'http';
 
 // Defining paths
 const configDir = path.join(os.homedir(), '.config', 'devKata');
