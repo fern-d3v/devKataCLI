@@ -100,6 +100,69 @@ export async function getGitCommits(repoPath, since = 'yesterday') {
         };
     }
 }
+// get detailed commit information with diff
+export async function getCommitDiff(repoPath, commitHash) {
+    try {
+        // Validate repoPath to prevent command injection
+        const normalizedPath = path.normalize(repoPath);
+        
+        // Validate commit hash (should be alphanumeric)
+        if (!/^[a-f0-9]+$/i.test(commitHash)) {
+            throw new Error('Invalid commit hash');
+        }
+        
+        // git show command to get full commit details with diff
+        const cmd = `cd ${JSON.stringify(normalizedPath)} && git --no-pager show ${commitHash} --color=always`;
+        
+        const { stdout, stderr } = await execAsync(cmd, { timeout: 10000, maxBuffer: 1024 * 1024 * 10 });
+        
+        if (stderr && !stderr.includes('warning')) {
+            throw new Error(stderr);
+        }
+        
+        return {
+            success: true,
+            diff: stdout,
+            commitHash
+        };
+    } catch (error) {
+        console.error('Error getting commit diff:', error.message);
+        return {
+            success: false,
+            diff: '',
+            error: error.message
+        };
+    }
+}
+// open repository in IDE or editor
+export async function openRepoInIDE(repoPath) {
+    try {
+        // Normalize path to prevent directory traversal
+        const normalizedPath = path.normalize(repoPath);
+        
+        // Try to open with VS Code first (most common)
+        try {
+            await execAsync(`code ${JSON.stringify(normalizedPath)}`, { timeout: 5000 });
+            return { success: true, message: 'Opened in VS Code', editor: 'VS Code' };
+        } catch {
+            // Fallback to macOS 'open' command which opens in default application
+            try {
+                await execAsync(`open ${JSON.stringify(normalizedPath)}`, { timeout: 5000 });
+                return { success: true, message: 'Opened repository', editor: 'default' };
+            } catch {
+                // Last fallback: provide manual instruction
+                return {
+                    success: false,
+                    message: `Could not open automatically. Navigate to: ${normalizedPath}`,
+                    repoPath: normalizedPath
+                };
+            }
+        }
+    } catch (error) {
+        console.error('Error opening repository:', error.message);
+        return { success: false, message: 'Failed to open repository', error: error.message };
+    }
+}
 //Validate if a path is a git repository
 export async function validateGitRepo(repoPath) {
     try {

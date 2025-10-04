@@ -2,7 +2,7 @@ import { confirm, text, isCancel, spinner, select } from "@clack/prompts";
 import pc from 'picocolors';
 import { getConfig } from './storage.js';
 import { fetchDevToArticles, fetchGitHubRepos, getRandomItem } from './apiHelpers.js';
-import { openInBrowser, openInEditor, getGitCommits } from './systemHelpers.js';
+import { openInBrowser, openInEditor, getGitCommits, getCommitDiff, openRepoInIDE } from './systemHelpers.js';
 import path from 'path';
 import os from 'os';
 
@@ -408,34 +408,175 @@ export async function handleReviewYesterdaysCode(task) {
             completed: continueAnyway,
             cancelled: isCancel(continueAnyway),
             details: { repo: selectedRepo, commits: 0 }
-        }
-    }
-    
-    console.log(dracula.success(`\n✓ Found ${result.count} commit(s) from yesterday:\n`));
-    result.commits.forEach((commit, index) => {
-        console.log(dracula.alt(`  ${index + 1}. ${commit}`));
-    });
-    console.log();
-    
-    const confirmed = await confirm({
-        message: dracula.info('Review these commits?')
-    });
-    
-    if (isCancel(confirmed)) {
-        return {
-            completed: false,
-            cancelled: true,
-            details: { repo: selectedRepo, commits: result.commits }
         };
     }
     
+    console.log(dracula.success(`\n✓ Found ${result.count} commit(s) from yesterday:\n`));
+    
+    const reviewedCommits = [];
+    let continueReviewing = true;
+    
+    while (continueReviewing) {
+        // Create options for commit selection
+        const commitOptions = result.commits.map((commit, index) => {
+            const wasReviewed = reviewedCommits.includes(commit);
+            const prefix = wasReviewed ? '✓ ' : '  ';
+            return {
+                value: commit,
+                label: `${prefix}${commit}`
+            };
+        });
+        
+        // Add options to finish or open in IDE
+        commitOptions.push(
+            { value: '__open_ide__', label: dracula.special('→ Open repository in IDE') },
+            { value: '__done__', label: dracula.success('✓ Done reviewing') }
+        );
+        
+        const commitChoice = await select({
+            message: dracula.info('Select a commit to review:'),
+            options: commitOptions
+        });
+        
+        if (isCancel(commitChoice)) {
+            return {
+                completed: false,
+                cancelled: true,
+                details: { repo: selectedRepo, commits: result.commits, reviewed: reviewedCommits }
+            };
+        }
+        
+        // Handle special actions
+        if (commitChoice === '__done__') {
+            continueReviewing = false;
+            break;
+        }
+        
+        if (commitChoice === '__open_ide__') {
+            console.log(dracula.info('\nOpening repository in IDE...\n'));
+            const openResult = await openRepoInIDE(selectedRepo);
+            
+            if (openResult.success) {
+                console.log(dracula.success(`✓ ${openResult.message}\n`));
+            } else {
+                console.log(dracula.error(`✗ ${openResult.message}\n`));
+            }
+            
+            const doneAfterIDE = await confirm({
+                message: dracula.info('Finished reviewing in IDE?')
+            });
+            
+            if (isCancel(doneAfterIDE)) {
+                return {
+                    completed: false,
+                    cancelled: true,
+                    details: { repo: selectedRepo, commits: result.commits, reviewed: reviewedCommits, openedInIDE: true }
+                };
+            }
+            
+            if (doneAfterIDE) {
+                continueReviewing = false;
+                break;
+            }
+            
+            continue;
+        }
+        
+        // Extract commit hash from the selected commit (format: "hash message")
+        const commitHash = commitChoice.split(' ')[0];
+        
+        // Ask how to review this commit
+        const reviewMethod = await select({
+            message: dracula.info('How do you want to review this commit?'),
+            options: [
+                { value: 'terminal', label: dracula.alt('View diff in terminal') },
+                { value: 'ide', label: dracula.special('Open in IDE') },
+                { value: 'back', label: dracula.dim('← Go back') }
+            ]
+        });
+        
+        if (isCancel(reviewMethod)) {
+            return {
+                completed: false,
+                cancelled: true,
+                details: { repo: selectedRepo, commits: result.commits, reviewed: reviewedCommits }
+            };
+        }
+        
+        if (reviewMethod === 'back') {
+            continue;
+        }
+        
+        if (reviewMethod === 'terminal') {
+            const s2 = spinner();
+            s2.start(dracula.info('Fetching commit diff...'));
+            
+            const diffResult = await getCommitDiff(selectedRepo, commitHash);
+            
+            s2.stop();
+            
+            if (!diffResult.success) {
+                console.log(dracula.error(`\n✗ Failed to fetch diff: ${diffResult.error}\n`));
+            } else {
+                console.log('\n' + dracula.dim('─'.repeat(80)));
+                console.log(diffResult.diff);
+                console.log(dracula.dim('─'.repeat(80)) + '\n');
+            }
+            
+            // Mark as reviewed
+            if (!reviewedCommits.includes(commitChoice)) {
+                reviewedCommits.push(commitChoice);
+            }
+            
+            const continueAfterDiff = await confirm({
+                message: dracula.info('Review another commit?')
+            });
+            
+            if (isCancel(continueAfterDiff) || !continueAfterDiff) {
+                continueReviewing = false;
+            }
+        } else if (reviewMethod === 'ide') {
+            console.log(dracula.info('\nOpening repository in IDE...\n'));
+            const openResult = await openRepoInIDE(selectedRepo);
+            
+            if (openResult.success) {
+                console.log(dracula.success(`✓ ${openResult.message}`));
+                console.log(dracula.dim(`  Review commit: ${commitHash}\n`));
+            } else {
+                console.log(dracula.error(`✗ ${openResult.message}\n`));
+            }
+            
+            // Mark as reviewed
+            if (!reviewedCommits.includes(commitChoice)) {
+                reviewedCommits.push(commitChoice);
+            }
+            
+            const doneWithReview = await confirm({
+                message: dracula.info('Finished reviewing?')
+            });
+            
+            if (isCancel(doneWithReview)) {
+                return {
+                    completed: false,
+                    cancelled: true,
+                    details: { repo: selectedRepo, commits: result.commits, reviewed: reviewedCommits, openedInIDE: true }
+                };
+            }
+            
+            if (doneWithReview) {
+                continueReviewing = false;
+            }
+        }
+    }
+    
     return {
-        completed: confirmed,
+        completed: true,
         cancelled: false,
         details: {
             repo: selectedRepo,
             commitCount: result.count,
             commits: result.commits,
+            reviewedCommits: reviewedCommits,
             timestamp: new Date().toISOString()
         }
     };
