@@ -33,23 +33,35 @@ Perfect for developers who want to establish morning routines, sharpen skills th
 ## Installation
 
 ### Prerequisites
-- **Node.js 18+** (ES modules support required)
-- **npm** (comes with Node.js)
+- **Node.js 18+** (Required for all installation methods)
 
-### Install Globally
+### Choose Your Installation Method
 
-#### **Option 1: From npm (recommended)**
+#### **Option 1: Homebrew (macOS/Linux)**
+```bash
+brew tap fern-d3v/devkatacli
+brew install devkatacli
+```
+
+#### **Option 2: npm (Cross-platform)**
 ```bash
 npm install -g devkatacli
 ```
 
-#### **Option 2: From source**
-1. git clone https://github.com/fern-d3v/devKataCLI.git
-2. cd devKataCLI
-3. npm install
-4. npm link
+#### **Option 3: npx (No installation)**
+```bash
+npx devkatacli start
+```
 
-#### **Verify Installation**
+#### **Option 4: From source**
+```bash
+git clone https://github.com/fern-d3v/devKataCLI.git
+cd devKataCLI
+npm install
+npm link
+```
+
+### Verify Installation
 ```bash
 devkata --help
 ```
@@ -70,7 +82,11 @@ You'll be guided through an interactive setup:
 
 •  Select template: Use defaults or create custom tasks
 
-•  Add tasks: Interactive prompts for your routine
+•  Link git repositories for code reviews
+
+•  Configure coding sandbox languages
+
+•  Build your personalized routine
 
 **2. Start Your Daily Practice**
    -Run your morning kata:
@@ -126,6 +142,28 @@ $ devkata start
 ✨ kata saved! see you tomorrow <3
 
 ---
+### What's Included in Each Kata?
+
+**miniKata** (10-15 minutes)
+- Posture check with ergonomic tips
+- Set 3 daily goals
+- Discover a tech article from Dev.to
+- Explore a random GitHub repository
+
+**namiKata** (15-30 minutes)
+- All miniKata tasks, plus:
+- Hydration reminder
+- Check communications (email, Slack, etc.)
+- Review yesterday's code commits
+- Practice typing skills on MonkeyType
+
+**devKata** (30-45 minutes)
+- All miniKata + namiKata tasks, plus:
+- Stretching exercises
+- Complete a coding challenge (LeetCode or CodeWars)
+- Practice in your coding sandbox
+
+---
 ### Available Commands
 
 | Command | Description |
@@ -137,19 +175,35 @@ $ devkata start
 ---
 ### Features
 
-•  Progressive Kata Types: Start small with miniKata, build up to comprehensive devKata sessions
+•  **Progressive Kata Types**: Start small with miniKata (10-15min), build up to devKata (30-45min)
 
-•  Interactive CLI Experience: Beautiful prompts powered by @clack/prompts
+•  **Interactive CLI Experience**: Beautiful prompts with Dracula-themed colors
 
-•  Default Templates: Pre-built kata routines based on developer best practices
+•  **API Integrations**: Search Dev.to articles and GitHub repos directly from your kata
 
-•  Custom Routines: Create personalized tasks tailored to your learning goals
+•  **Git Integration**: Review yesterday's commits from your linked repositories
 
-•  Progress Tracking: Automatic completion tracking and session history
+•  **Coding Challenges**: Quick access to LeetCode and CodeWars
 
-•  Spaced Repetition: Built-in task scheduling for optimal learning
+•  **Typing Practice**: Launch MonkeyType for skill improvement
 
-•  Zero Configuration: Works out of the box with sensible defaults
+•  **Coding Sandbox**: Daily practice files for multiple languages
+
+•  **Progress Tracking**: Automatic session logging with detailed metrics
+
+•  **Default Templates**: Pre-built kata routines based on developer best practices
+
+•  **Fully Customizable**: Create your own tasks or modify existing ones
+
+---
+### Configuration
+
+Your configuration and logs are stored in `~/.config/devKata/`:
+
+- `kata.json` - Your saved kata routines
+- `config.json` - Git repositories and sandbox languages
+- `logs/` - Daily session logs with detailed metrics
+- `coding-sandbox.*` - Your practice files
 
 ---
 

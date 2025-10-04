@@ -138,11 +138,11 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Files to ignore
+# Personal development files (not for users)
 appendix_diagram.md
-devKata-lessons.md
 data-schema-design.md
-wamp.md
+devKata-lessons.md
+LOGGING_PROGRESS.md
 warmup_plan.md
-warp.md
+warm.md
 

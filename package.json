@@ -1,8 +1,8 @@
 {
   "name": "devKataCLI",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Master dev habits, one kata at a time - A CLI for daily developer practice routines",
+  "main": "src/index.js",
   "type": "module",
   "bin": {
     "devkata": "./src/index.js"
@@ -10,9 +10,29 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "cli",
+    "kata",
+    "developer-tools",
+    "productivity",
+    "habits",
+    "coding-practice",
+    "terminal",
+    "developer-habits"
+  ],
+  "author": "fern-d3v <rhynhilt@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-d3v/devKataCLI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fern-d3v/devKataCLI/issues"
+  },
+  "homepage": "https://github.com/fern-d3v/devKataCLI#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@clack/prompts": "^0.11.0",
     "@modelcontextprotocol/sdk": "^1.18.2",
