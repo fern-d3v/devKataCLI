@@ -1,6 +1,5 @@
 import { intro, outro, text, select, isCancel } from '@clack/prompts';
-import { saveKata, buildKata, addRepository, addSandboxLanguage, getConfig } from '../utils/storage.js';
-import { DEFAULT_KATAS } from '../utils/storage.js';
+import { addRepository, addSandboxLanguage } from '../utils/storage.js';
 import pc from 'picocolors';
 
 const dracula = {
@@ -12,11 +11,11 @@ const dracula = {
     dim: (text) => pc.dim(text)
 };
 
-export default async function newCmd() {
-  intro(dracula.special('Create a new devKata routine'));
+export default async function configCmd() {
+  intro(dracula.special('Configure kata routine settings'));
   
   const kataType = await select({
-    message: dracula.info('What type of kata would you like to create?'),
+    message: dracula.info('What type of kata would you like to configure?'),
     options: [
         { value: 'miniKata', label: 'miniKata (10-15 minutes)' },
         { value: 'namiKata', label: 'namiKata (15-30 minutes)' },
@@ -25,71 +24,19 @@ export default async function newCmd() {
 });
 
   if (isCancel(kataType)) {
-      outro(dracula.error('Kata creation cancelled.'));
+      outro(dracula.error('Kata configuration cancelled.'));
       return;
   }
-  
-  const useDefaults = await select({
-    message: dracula.info('How would you like to configure this kata?'),
-    options: [
-        { value: true, label: dracula.special('Use default kata') },
-        { value: false, label: dracula.alt('Create custom kata') }
-    ],
-  });
-  
-  if (isCancel(useDefaults)) {
-    outro(dracula.error('Kata creation cancelled.'));
-    return;
-  }
-  
-  let tasks = [];
-  
-  if (useDefaults === true) {
-      tasks = await buildKata(kataType);
-  } else {
-      let taskCount = 3;
-      
-      if (kataType === 'devKata') {
-          tasks.push(
-              { description: "Open coding sandbox for practice", completed: false },
-              { description: "Complete a challenge on CodeWars", completed: false }
-          );
-          taskCount = 1;
-      }
-      
-      for (let i = 0; i < taskCount; i++) {
-          const taskPrompt = kataType === 'devKata' && i === 0 
-              ? 'Enter a custom task to complete your devKata:' 
-              : `Enter a task ${i + 1} of ${taskCount}:`;
-          
-          const task = await text({
-              message: dracula.info(taskPrompt),
-              placeholder: 'e.g., Review yesterday\'s code for 10 minutes',
-          });
-          
-          if (isCancel(task)) {
-              outro(dracula.error('initialization cancelled. no kata created.'));
-              return;
-          }
-          
-          if (task) {
-              tasks.push({ description: task, completed: false });
-          } else {
-              outro(dracula.error('Empty task not allowed. Please provide a task description.'));
-              return;
-          }
-      }
-  }
-  
+  // Ask if user wants to configure linked git repositories
   const linkRepos = await select({
-  message: dracula.info('Would you like to link any git repositories for code review?'),
+  message: dracula.info('Would you like to configure any linked git repositories for code review?'),
   options: [
     { value: true, label: dracula.special('Yes, link repositories') },
     { value: false, label: dracula.dim('Skip for now') }
   ],
 });
 if (isCancel(linkRepos)) {
-  outro(dracula.error('Kata creation cancelled.'));
+  outro(dracula.error('Kata configuration cancelled.'));
   return;
 }
 if (linkRepos) {
@@ -178,6 +125,5 @@ if (configureSandbox) {
     }
   }
 }
-  await saveKata(kataType, tasks);
-  outro(dracula.success(`${kataType} created successfully!`));
+  outro(dracula.success(`${kataType} configuration saved successfully!`));
 }

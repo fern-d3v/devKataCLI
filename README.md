@@ -3,7 +3,7 @@
   
   # devKataCLI
   
-  ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+  ![Version](https://img.shields.io/badge/version-1.0.1-orange.svg)
   ![License](https://img.shields.io/badge/license-MIT-green.svg)
   [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/fernd3v)
 
@@ -90,6 +90,7 @@ You'll be guided through an interactive setup:
 
 •  Build your personalized routine
 
+
 **2. Start Your Daily Practice**
    -Run your morning kata:
 
@@ -106,6 +107,19 @@ You'll be guided through an interactive setup:
 •  Track completion status
 
 •  Save your progress
+
+
+**3. Configure Kata's After Setup**
+```bash
+devkata config
+```
+The CLI will run a similar setup to the `devkata new` command:
+
+•  Choose which Kata to configure
+
+•  Link git repositories
+
+•  Select coding languages for sandbox
 
 ---
 # **Example Workflow**
@@ -172,6 +186,7 @@ $ devkata start
 |---------|-------------|
 | devkata new | Create a new kata routine (mini, nami, or dev) |
 | devkata start | Start your daily kata practice |
+| devkata config | Config kata after creation |
 | devkata --help | Show all available commands |
 
 ---
