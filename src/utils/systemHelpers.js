@@ -13,8 +13,21 @@ export async function openInBrowser(url) {
             return { success: false, message: 'Invalid URL protocol', url };
         }
         
-        // macOS uses 'open' command
-        await execAsync(`open ${JSON.stringify(url)}`, { timeout: 5000 });
+        // Determine the command based on platform
+        let command;
+        switch (process.platform) {
+            case 'darwin':  // macOS
+                command = 'open';
+                break;
+            case 'win32':   // Windows
+                command = 'start';
+                break;
+            default:        // Linux and other Unix-like systems
+                command = 'xdg-open';
+                break;
+        }
+        
+        await execAsync(`${command} ${JSON.stringify(url)}`, { timeout: 5000 });
         return { success: true, message: 'Opened in browser' };
     } catch (error) {
         console.error('Error opening browser:', error.message);
@@ -46,9 +59,22 @@ export async function openInEditor(filePath) {
             }
             await fs.writeFile(filePath, initialContent, 'utf8');
         }
-        // try opening with default application (macOS)
+        // try opening with default application based on platform
         try {
-            await  execAsync(`open ${JSON.stringify(filePath)}`, { timeout: 5000 });
+            let command;
+            switch (process.platform) {
+                case 'darwin':  // macOS
+                    command = 'open';
+                    break;
+                case 'win32':   // Windows
+                    command = 'start';
+                    break;
+                default:        // Linux and other Unix-like systems
+                    command = 'xdg-open';
+                    break;
+            }
+            
+            await execAsync(`${command} ${JSON.stringify(filePath)}`, { timeout: 5000 });
             return { success: true, message: 'Sandbox opened in default editor' };
         } catch {
             // fallback: try $EDITOR environment variable
