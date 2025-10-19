@@ -3,7 +3,7 @@
   
   # devKataCLI
   
-  ![Version](https://img.shields.io/badge/version-1.0.1-orange.svg)
+  ![Version](https://img.shields.io/badge/version-1.0.2-orange.svg)
   ![License](https://img.shields.io/badge/license-MIT-green.svg)
   [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/fernd3v)
 
