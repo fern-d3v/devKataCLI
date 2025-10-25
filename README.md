@@ -2,10 +2,12 @@
   <img src="./promo/devKataCLI-logo.png" alt="devKataCLI Logo" width="200">
   
   # devKataCLI
-  
-  ![Version](https://img.shields.io/badge/version-1.0.2-orange.svg)
-  ![License](https://img.shields.io/badge/license-MIT-green.svg)
-  [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/fernd3v)
+
+  ![npm](https://img.shields.io/npm/dt/devkatacli?style=flat)
+  ![Version](https://img.shields.io/badge/version-1.0.2-orange.svg?style=flat)
+  ![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)
+  <br>
+  [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/fernd3v?style=flat)
 
   
   **Master dev habits, one kata at a time**
