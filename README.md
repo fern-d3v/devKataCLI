@@ -4,7 +4,7 @@
 # devKataCLI
 
 ![npm](https://img.shields.io/npm/dt/devkatacli?style=flat)
-![Version](https://img.shields.io/badge/version-1.0.2-orange.svg?style=flat)
+![Version](https://img.shields.io/badge/version-1.1.0-orange.svg?style=flat)
 ![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)
 <br>
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/fernd3v?style=flat)
@@ -13,7 +13,8 @@
 
 Three progressive kata types:
 
-**mini** _(10-15min)_ → **nami** _(15-30min)_ → **dev** _(30-45min)_
+**mini** _(10-15min)_ → **nami** _(15-30min)_ → **dev**
+_(30-45min)_
 
 ---
 
@@ -25,17 +26,23 @@ Three progressive kata types:
 
 ## Why devKataCLI?
 
-Building consistent development habits is hard. You know you should practice regularly, review code, and stay sharp—but life gets in the way.
+Building consistent development habits is hard. You know you
+should practice regularly, review code, and stay sharp—but
+life gets in the way.
 
 devKataCLI gives you structure without overwhelming you:
 
 - **Start small** - Begin with just 10-15 minutes
-- **Build progressively** - Grow your practice as habits form
+- **Build progressively** - Grow your practice as habits
+  form
 - **Zero setup** - Run from anywhere in your terminal
-- **Fully customizable** - Create your own katas or use defaults
+- **Fully customizable** - Create your own katas or use
+  defaults
 - **Track progress** - See your consistency over time
 
-Perfect for developers who want to establish morning routines, sharpen skills through spaced repetition, or simply build more intentional coding habits.
+Perfect for developers who want to establish morning
+routines, sharpen skills through spaced repetition, or
+simply build more intentional coding habits.
 
 ---
 
@@ -87,7 +94,8 @@ You should see the command options and be ready to start!
 
 ## **Quick Start**
 
-**1. Create Your First Kata** - Start by creating a kata routine:
+**1. Create Your First Kata** - Start by creating a kata
+routine:
 
 ```bash
 devkata new
@@ -95,7 +103,8 @@ devkata new
 
 You'll be guided through an interactive setup:
 
-• Choose kata type: mini (10-15min), nami (15-30min), or dev (30-45min)
+• Choose kata type: mini (10-15min), nami (15-30min), or dev
+(30-45min)
 
 • Select template: Use defaults or create custom tasks
 
@@ -105,8 +114,7 @@ You'll be guided through an interactive setup:
 
 • Build your personalized routine
 
-**2. Start Your Daily Practice**
--Run your morning kata:
+**2. Start Your Daily Practice** -Run your morning kata:
 
 ```bash
  devkata start
@@ -128,7 +136,8 @@ The CLI will:
 devkata config
 ```
 
-The CLI will run a similar setup to the `devkata new` command:
+The CLI will run a similar setup to the `devkata new`
+command:
 
 • Choose which Kata to configure
 
@@ -146,9 +155,11 @@ $ devkata new
 
 ✨ Create a new devKata routine
 
-? What type of kata would you like to create? › miniKata (10-15 minutes)
+? What type of kata would you like to create? › miniKata
+(10-15 minutes)
 
-? How would you like to configure this kata? › Use default kata
+? How would you like to configure this kata? › Use default
+kata
 
 ✅ miniKata created successfully with default tasks
 
@@ -206,42 +217,79 @@ $ devkata start
 
 ### Available Commands
 
-| Command        | Description                                    |
-| -------------- | ---------------------------------------------- |
-| devkata new    | Create a new kata routine (mini, nami, or dev) |
-| devkata start  | Start your daily kata practice                 |
-| devkata config | Config kata after creation                     |
-| devkata --help | Show all available commands                    |
+| Command                 | Description                                    |
+| ----------------------- | ---------------------------------------------- |
+| devkata new             | Create a new kata routine (mini, nami, or dev) |
+| devkata start           | Start your daily kata practice                 |
+| devkata config          | Config kata after creation                     |
+| devkata stats           | View your practice statistics and progress     |
+| devkata stats --reset   | Reset all statistics (with backup option)      |
+| devkata stats --restore | Restore statistics from a backup               |
+| devkata --help          | Show all available commands                    |
 
 ---
 
 ### Features
 
-• **Progressive Kata Types**: Start small with miniKata (10-15min), build up to devKata (30-45min)
+• **Progressive Kata Types**: Start small with miniKata
+(10-15min), build up to devKata (30-45min)
 
-• **Interactive CLI Experience**: Beautiful prompts with Dracula-themed colors
+• **Interactive CLI Experience**: Beautiful prompts with
+Dracula-themed colors
 
-• **API Integrations**: Search Dev.to articles and GitHub repos directly from your kata
+• **API Integrations**: Search Dev.to articles and GitHub
+repos directly from your kata
 
-• **Git Integration**: Review yesterday's commits from your linked repositories
+• **Git Integration**: Review yesterday's commits from your
+linked repositories
 
-• **Coding Challenges**: Quick access to LeetCode and CodeWars
+• **Coding Challenges**: Quick access to LeetCode and
+CodeWars
 
-• **Typing Practice**: Launch MonkeyType for skill improvement
+• **Typing Practice**: Launch MonkeyType for skill
+improvement
 
-• **Coding Sandbox**: Daily practice files for multiple languages
+• **Coding Sandbox**: Daily practice files for multiple
+languages
 
-• **Progress Tracking**: Automatic session logging with detailed metrics
+• **Progress Tracking**: Automatic session logging with
+detailed metrics
 
-• **Default Templates**: Pre-built kata routines based on developer best practices
+• **Statistics & Analytics**: View completion history,
+streaks, and GitHub-style activity calendar
 
-• **Fully Customizable**: Create your own tasks or modify existing ones
+• **Data Management**: Reset statistics with backup/restore
+functionality
+
+• **Default Templates**: Pre-built kata routines based on
+developer best practices
+
+• **Fully Customizable**: Create your own tasks or modify
+existing ones
+
+---
+
+### Track Your Progress
+
+View detailed statistics with the `devkata stats` command:
+
+- **Completion History**: View katas completed over 7/30/90 days, this year, or all time
+- **GitHub-Style Calendar**: Visual heatmap of your activity
+- **Current Streak**: Track consecutive days of practice
+- **Category Breakdown**: See your most practiced categories
+- **Articles & Repos**: List of articles read and repositories reviewed
+- **Average Duration**: Monitor your session lengths
+
+Manage your data:
+- `devkata stats --reset` - Reset all statistics (creates backup first)
+- `devkata stats --restore` - Restore from a previous backup
 
 ---
 
 ### Configuration
 
-Your configuration and logs are stored in `~/.config/devKata/`:
+Your configuration and logs are stored in
+`~/.config/devKata/`:
 
 - `kata.json` - Your saved kata routines
 - `config.json` - Git repositories and sandbox languages
@@ -254,7 +302,8 @@ Your configuration and logs are stored in `~/.config/devKata/`:
 
 ## Contributing
 
-We welcome contributions! Please see our Contributing Guidelines for details on:
+We welcome contributions! Please see our Contributing
+Guidelines for details on:
 
 • Setting up the development environment
 
@@ -268,7 +317,8 @@ For questions or discussions, feel free to open an issue.
 
 ## License
 
-This project is licensed under the MIT License - see the _LICENSE_ file for details.
+This project is licensed under the MIT License - see the
+_LICENSE_ file for details.
 
 ---
 

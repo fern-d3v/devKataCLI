@@ -1,6 +1,6 @@
 {
   "name": "devkatacli",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Master dev habits, one kata at a time - A CLI for daily developer practice routines",
   "main": "src/index.js",
   "type": "module",
