@@ -110,3 +110,32 @@ export function createTaskLogEntry(task, result) {
     };
 };
 
+export async function getAllLogs() {
+    try {
+        const files = await fs.readdir(logsDir);
+        const logFiles = files.filter(file => file.startsWith('kataLog_') && file.endsWith('.json'));
+        
+        const logs = [];
+        for (const file of logFiles) {
+            const filePath = path.join(logsDir, file);
+            try {
+                const jsonString = await fs.readFile(filePath, 'utf-8');
+                const logData = JSON.parse(jsonString);
+                logs.push(logData);
+            } catch (error) {
+                console.error(`Error reading log file ${file}:`, error);
+            }
+        }
+        
+        // Sort by date
+        logs.sort((a, b) => a.date.localeCompare(b.date));
+        return logs;
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            return []; // No logs directory yet
+        }
+        console.error('Error reading logs directory:', error);
+        return [];
+    }
+};
+
