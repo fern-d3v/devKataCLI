@@ -4,7 +4,14 @@ import { program } from 'commander';
 import newCmd from './commands/new.js';
 import startCmd from './commands/start.js';
 import configCmd from './commands/config.js';
+import statsCmd from './commands/stats.js';
 
+program
+    .name('devKata')
+    .description('A CLI tool to help you practice coding katas daily')
+    .version('1.0.0');
+
+// Register commands
 program
     .command('new')
     .description('Create kata routine')
@@ -19,5 +26,10 @@ program
     .command('config')
     .description('Configure kata routine settings')
     .action(configCmd);
+
+program
+    .command('stats')
+    .description('View your kata practice statistics')
+    .action(statsCmd);
 
         program.parse();
